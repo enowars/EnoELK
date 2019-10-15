@@ -1,3 +1,2 @@
-  - pipeline.id: enowars
-    path.config: "/config-dir/enowars.conf"
-
+  - pipeline.id: enologmessage
+    path.config: "/config-dir/enologmessage.conf"
