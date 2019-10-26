@@ -1,5 +1,2 @@
   - pipeline.id: enologmessage
     path.config: "/config-dir/enologmessage.conf"
-
-  - pipeline.id: enostatisticsmessage
-    path.config: "/config-dir/enostatisticsmessage.conf"
