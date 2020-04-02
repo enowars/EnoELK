@@ -1,11 +1,11 @@
 version: "3"
 services:
   elasticsearch:
-    image: elasticsearch:7.4.0
+    image: elasticsearch:7.6.2
     environment:
     - discovery.type=single-node
   kibana:
-    image: kibana:7.4.0
+    image: kibana:7.6.2
     ports:
     - "5601:5601"
     links:
@@ -13,7 +13,7 @@ services:
     depends_on:
     - elasticsearch
   logstash:
-    image: logstash:7.4.0
+    image: logstash:7.6.2
     links:
     - elasticsearch
     volumes:
