@@ -16,3 +16,26 @@ output.logstash:
   # The Logstash hosts
   hosts: ["localhost:5044"]
 ```
+
+Log Format:
+
+```ts
+interface EnoLogMessage {
+  tool: string;                                                           //"ExampleChecker"
+  type: string;                                                           //"infrastructure"
+  severity: "CRITICAL" | "ERROR" | "WARNING" | "INFO" | "DEBUG";
+  severityLevel: number;                                                  //Debug = 0
+  timestamp: string;                                                      //"2020-06-02T11:59:24.794Z"
+  module: string | null;                                                  //"ExampleChecker.ExampleChecker"
+  function: string | null;                                                //"ExampleChecker.ExampleChecker.exampleputflag"
+  flag: string | null;                                                    //"ENOFlag"
+  flagIndex: number | null;                                               //0
+  runId: number | null;                                                   //241335
+  roundId: number | null;                                                 //4
+  relatedRoundId: number | null;                                          //3
+  message: string;                                                        //"Fetching Users with relrID29, tIdis:205"
+  teamName: string | null;                                                //"teamname205"
+  serviceName: string | null;                                             //"ExampleService"
+  method: "putflag" | "getflag" | "putnoise" | "getnoise" | "havoc";
+}
+```
