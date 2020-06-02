@@ -35,6 +35,7 @@ interface EnoLogMessage {
   relatedRoundId: number | null;                                          //3
   message: string;                                                        //"Fetching Users with relrID29, tIdis:205"
   teamName: string | null;                                                //"teamname205"
+  teamId: number | null;                                                  //205
   serviceName: string | null;                                             //"ExampleService"
   method: "putflag" | "getflag" | "putnoise" | "getnoise" | "havoc";
 }
