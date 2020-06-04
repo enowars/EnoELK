@@ -37,6 +37,6 @@ interface EnoLogMessage {
   teamName: string | null;                                                //"teamname205"
   teamId: number | null;                                                  //205
   serviceName: string | null;                                             //"ExampleService"
-  method: "putflag" | "getflag" | "putnoise" | "getnoise" | "havoc";
+  method: "putflag" | "getflag" | "putnoise" | "getnoise" | "havoc" | null;
 }
 ```
