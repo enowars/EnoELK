@@ -26,6 +26,3 @@ services:
     ports:
     - "5044:5044"
     - "5045:5045"
-  visualizations:
-    build: visualizations
-
