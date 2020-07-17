@@ -12,6 +12,9 @@ while ! curl -sq --fail http://localhost:5601/api/status; do
 done
 
 curl -vvv -X POST -F "file=@./visualizations/saved-obj.ndjson" -H 'kbn-xsrf: true' http://localhost:5601/api/saved_objects/_import?overwrite=True
-metricbeat setup --dashboards
+metricbeat setup -e \
+  -E output.logstash.enabled=false \
+  -E output.elasticsearch.hosts=['localhost:9200'] \
+  -E setup.kibana.host=localhost:5601
 
 docker-compose up
