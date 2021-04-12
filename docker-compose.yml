@@ -6,6 +6,8 @@ services:
     - discovery.type=single-node
     ports:
     - "127.0.0.1:9200:9200"
+    volumes:
+    - ./es_data:/usr/share/elasticsearch/data
   kibana:
     image: kibana:7.6.2
     ports:
