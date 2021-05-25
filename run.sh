@@ -17,4 +17,4 @@ metricbeat setup -e \
   -E output.elasticsearch.hosts=['localhost:9200'] \
   -E setup.kibana.host=localhost:5601
 
-docker-compose up
+docker-compose up -d
