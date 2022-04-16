@@ -1,7 +1,7 @@
 version: "3"
 services:
   elasticsearch:
-    image: elasticsearch:8.1.2
+    image: ghcr.io/enowars/enoelk_elasticsearch:8.1.2
     environment:
     - discovery.type=single-node
     - xpack.security.enabled=false
