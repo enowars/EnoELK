@@ -40,3 +40,9 @@ interface EnoLogMessage {
   method: "putflag" | "getflag" | "putnoise" | "getnoise" | "havoc" | null;
 }
 ```
+
+### TODO
+```
+curl -XPUT localhost:9200/enologmessage
+curl -XPUT localhost:9200/enologmessage/_mapping -H 'Content-Type: application/json' -d "$(cat newmapping.txt)"
+```
