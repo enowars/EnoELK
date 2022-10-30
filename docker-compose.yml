@@ -311,7 +311,7 @@ services:
       }'
 
       echo "\nRunning metricbeat setup...";
-      /usr/share/metricbeat/bin/metricbeat setup -e \
+      /usr/bin/metricbeat setup -e \
         -E output.logstash.enabled=false \
         -E output.elasticsearch.hosts=['elasticsearch:9200'] \
         -E setup.kibana.host=kibana:5601
