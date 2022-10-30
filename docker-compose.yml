@@ -50,6 +50,7 @@ services:
         sleep 3;
       done
 
+      echo "Creating enologmessage index...";
       curl -X PUT http://elasticsearch:9200/enologmessage -H 'Content-Type: application/json' -d '
       {
         "mappings": {
@@ -287,6 +288,7 @@ services:
       }
       '
 
+      echo "Creating enologmessage data view...";
       curl -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
@@ -296,6 +298,7 @@ services:
         }
       }'
 
+      echo "Creating enostatisticsmessage data view...";
       curl -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
@@ -305,7 +308,10 @@ services:
         }
       }'
 
+      echo "Running metricbeat setup...";
       metricbeat setup -e \
         -E output.logstash.enabled=false \
         -E output.elasticsearch.hosts=['elasticsearch:9200'] \
         -E setup.kibana.host=kibana:5601
+
+      echo "done!"
