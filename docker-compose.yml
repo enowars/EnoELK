@@ -37,6 +37,7 @@ services:
     entrypoint: /bin/sh
     volumes:
     - /usr/share/metricbeat/bin/metricbeat:/usr/share/metricbeat/bin/metricbeat:ro
+    - /etc/metricbeat/metricbeat.yml:/etc/metricbeat/metricbeat.yml:ro
     command:
     - -c
     - |
