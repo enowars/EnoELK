@@ -33,13 +33,14 @@ services:
     - "5044:5044"
     - "5045:5045"
   init:
-    image: alpine/curl
+    image: ubuntu
     entrypoint: /bin/sh
     volumes:
     - /usr/share/metricbeat/bin/metricbeat:/usr/share/metricbeat/bin/metricbeat:ro
     command:
     - -c
     - |
+      apt-get update && apt-get install -y --no-install-recommends curl
       while ! curl -sq http://elasticsearch:9200; do
         echo "Waiting for elasticsearch to start...";
         sleep 3;
@@ -287,7 +288,7 @@ services:
       }
       '
 
-      echo "Creating enologmessage data view...";
+      echo "\nCreating enologmessage data view...";
       curl -sq -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
@@ -297,7 +298,7 @@ services:
         }
       }'
 
-      echo "Creating enostatisticsmessage data view...";
+      echo "\nCreating enostatisticsmessage data view...";
       curl -sq -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
@@ -307,7 +308,7 @@ services:
         }
       }'
 
-      echo "Running metricbeat setup...";
+      echo "\nRunning metricbeat setup...";
       /usr/share/metricbeat/bin/metricbeat setup -e \
         -E output.logstash.enabled=false \
         -E output.elasticsearch.hosts=['elasticsearch:9200'] \
