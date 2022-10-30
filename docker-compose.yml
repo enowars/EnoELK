@@ -36,7 +36,7 @@ services:
     image: ubuntu
     entrypoint: /bin/sh
     volumes:
-    - /usr/share/metricbeat/bin/metricbeat:/usr/share/metricbeat/bin/metricbeat:ro
+    - /usr/share/metricbeat/:/usr/share/metricbeat/:ro
     - /usr/bin/metricbeat:/usr/bin/metricbeat:ro
     - /etc/metricbeat/metricbeat.yml:/etc/metricbeat/metricbeat.yml:ro
     command:
