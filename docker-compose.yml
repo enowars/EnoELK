@@ -40,7 +40,6 @@ services:
     command:
     - -c
     - |
-      echo "hello world"
       while ! curl -sq http://elasticsearch:9200; do
         echo "Waiting for elasticsearch to start...";
         sleep 3;
@@ -51,7 +50,7 @@ services:
       done
 
       echo "Creating enologmessage index...";
-      curl -X PUT http://elasticsearch:9200/enologmessage -H 'Content-Type: application/json' -d '
+      curl -sq -X PUT http://elasticsearch:9200/enologmessage -H 'Content-Type: application/json' -d '
       {
         "mappings": {
           "dynamic": false,
@@ -289,7 +288,7 @@ services:
       '
 
       echo "Creating enologmessage data view...";
-      curl -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
+      curl -sq -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
           "title": "enologmessage",
@@ -299,7 +298,7 @@ services:
       }'
 
       echo "Creating enostatisticsmessage data view...";
-      curl -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
+      curl -sq -X POST http://kibana:5601/api/data_views/data_view -H 'Content-Type: application/json' -H 'kbn-xsrf: reporting' -d '
       {
         "data_view": {
           "title": "enostatisticsmessage",
@@ -309,6 +308,7 @@ services:
       }'
 
       echo "Running metricbeat setup...";
+      apk add bash
       metricbeat setup -e \
         -E output.logstash.enabled=false \
         -E output.elasticsearch.hosts=['elasticsearch:9200'] \
