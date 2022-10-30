@@ -54,7 +54,7 @@ services:
           "dynamic": false,
           "properties": {
             "@timestamp": {
-              "type": "date"
+              "type": "date_nanos"
             },
             "@version": {
               "type": "text",
@@ -226,7 +226,7 @@ services:
                   }
                 },
                 "timestamp": {
-                  "type": "date"
+                  "type": "date_nanos"
                 },
                 "tool": {
                   "type": "text",
