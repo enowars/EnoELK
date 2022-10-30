@@ -8,8 +8,8 @@ services:
     - xpack.security.enabled=false
     ports:
     - "127.0.0.1:9200:9200"
-    volumes:
-    - ./data/elasticsearch:/usr/share/elasticsearch/data
+    #volumes:
+    #- ./data/elasticsearch:/usr/share/elasticsearch/data
   kibana:
     image: kibana:8.4.3
     restart: unless-stopped
@@ -35,6 +35,8 @@ services:
   init:
     image: alpine/curl
     entrypoint: /bin/sh
+    volumes:
+    - /usr/bin/metricbeat:/usr/bin/metricbeat:ro
     command:
     - -c
     - |
@@ -302,3 +304,8 @@ services:
           "timeFieldName": "enostatistics.timestamp"
         }
       }'
+
+      metricbeat setup -e \
+        -E output.logstash.enabled=false \
+        -E output.elasticsearch.hosts=['elasticsearch:9200'] \
+        -E setup.kibana.host=kibana:5601
