@@ -1,34 +1,68 @@
 version: "3"
 services:
   elasticsearch:
-    image: ghcr.io/enowars/enoelk_elasticsearch:8.1.2
+    image: elasticsearch:8.4.3
+    restart: unless-stopped
     environment:
     - discovery.type=single-node
     - xpack.security.enabled=false
     ports:
     - "127.0.0.1:9200:9200"
-    #volumes:
-    #- ./es_data:/usr/share/elasticsearch/data
+    volumes:
+    - ./data/elasticsearch:/usr/share/elasticsearch/data
   kibana:
-    image: kibana:8.1.2
+    image: kibana:8.4.3
+    restart: unless-stopped
     ports:
     - "5601:5601"
-    links:
-    - elasticsearch
-    depends_on:
-    - elasticsearch
     environment:
     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     - xpack.security.enabled=false
   logstash:
-    image: logstash:8.1.2
+    image: logstash:8.4.3
+    restart: unless-stopped
     links:
     - elasticsearch
     volumes:
-    - ./config-dir:/config-dir
+    - ./config-dir:/config-dir:ro
     command: logstash --path.settings=/config-dir
     depends_on:
-    - elasticsearch
+      init:
+        condition: service_completed_successfully
     ports:
     - "5044:5044"
     - "5045:5045"
+  init:
+    image: alpine/curl
+    entrypoint: /bin/sh
+    command:
+    - -c
+    - |
+      echo "hello world"
+      while ! curl -sq http://elasticsearch:9200; do
+        echo "Waiting for elasticsearch to start...";
+        sleep 3;
+      done
+      while ! curl -sq --fail http://kibana:5601/api/status; do
+        echo "Waiting for kibana to start..."
+        sleep 3;
+      done
+
+      curl -X POST http://kibana:5601/api/data_views/data_view
+      {
+        "data_view": {
+          "title": "enologmessage",
+          "name": "enologmessage",
+          "fieldFormats": {
+            "event_time": {
+              "id": "date_nanos"
+            },
+            "machine.ram": {
+              "id": "number",
+              "params": {
+                "pattern": "0,0.[000] b"
+              }
+            }
+          }
+        }
+      }
