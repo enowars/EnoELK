@@ -36,7 +36,7 @@ services:
     image: alpine/curl
     entrypoint: /bin/sh
     volumes:
-    - /usr/bin/metricbeat:/usr/bin/metricbeat:ro
+    - /usr/share/metricbeat/bin/metricbeat:/usr/share/metricbeat/bin/metricbeat:ro
     command:
     - -c
     - |
@@ -308,8 +308,7 @@ services:
       }'
 
       echo "Running metricbeat setup...";
-      apk add bash
-      metricbeat setup -e \
+      /usr/share/metricbeat/bin/metricbeat setup -e \
         -E output.logstash.enabled=false \
         -E output.elasticsearch.hosts=['elasticsearch:9200'] \
         -E setup.kibana.host=kibana:5601
