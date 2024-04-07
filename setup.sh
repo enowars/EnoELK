@@ -2,6 +2,8 @@
 set -e
 cd "$(dirname "$0")"
 
+apt-get update && apt-get install -y --no-install-recommends curl
+
 while ! curl -sq http://elasticsearch:9200; do
     echo "Waiting for elasticsearch to start...";
     sleep 3;

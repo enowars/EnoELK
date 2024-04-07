@@ -33,7 +33,7 @@ services:
     - "5044:5044"
     - "5045:5045"
   init:
-    image: curlimages/curl:8.4.0
+    image: ubuntu
     entrypoint: /bin/sh
     volumes:
     - /usr/share/metricbeat/:/usr/share/metricbeat/:ro
